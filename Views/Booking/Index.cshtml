@@ -6,62 +6,26 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DistinationAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TourPackage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TravelDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserAccountId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DistinationAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TourPackage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserAccountId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                <a class="btn btn-success" asp-controller="Applicant" asp-action="Details" asp-route-id="@item.BookingId">Details</a>
-@*                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) *@
-                    
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Booking ID: @Html.DisplayFor(modelItem => item.BookingId)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Tour Package: @Html.DisplayFor(modelItem => item.TourPackage)</h6>
+                        <p class="card-text">
+                            <strong>Destination Address:</strong> @Html.DisplayFor(modelItem => item.DistinationAddress) <br>
+                            <strong>Travel Date:</strong> @Html.DisplayFor(modelItem => item.TravelDate) <br>
+                            <strong>Return Date:</strong> @Html.DisplayFor(modelItem => item.ReturnDate) <br>
+                            <strong>User Account ID:</strong> @Html.DisplayFor(modelItem => item.UserAccountId)
+                        </p>
+                        <a class="btn btn-success" asp-controller="Applicant" asp-action="Details" asp-route-id="@item.BookingId">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
