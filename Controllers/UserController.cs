@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+using System.Net.Http;
 using TravelBooking.MVC.Models;
 
 namespace TravelBooking.MVC.Controllers
 {
-    public class BookingController : Controller
+    public class UserController : Controller
     {
         private readonly IConfiguration _config;
 
         private readonly string? _apiUrl;
-        private readonly HttpClient _httpClient; 
-
-        public BookingController(IConfiguration config, HttpClient httpClient)
+        private readonly HttpClient _httpClient;
+        public UserController(IConfiguration config, HttpClient httpClient)
         {
             _config = config;
             _httpClient = httpClient;
@@ -31,22 +30,21 @@ namespace TravelBooking.MVC.Controllers
                 _httpClient.BaseAddress = new Uri(_apiUrl);
             }
         }
-
         [HttpGet]
-        public IActionResult Index(int userAccountId)
+        public IActionResult Index()
         {
-            List<BookingViewModel> bookingList = new List<BookingViewModel>();
+            List<UserAccountViewModel> userAccountList = new List<UserAccountViewModel>();
 
             try
             {
-                HttpResponseMessage response = _httpClient.GetAsync($"api/GetBookings/{userAccountId}").Result;
+                HttpResponseMessage response = _httpClient.GetAsync("api/GetUserAccounts").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
-                    var deserializedList = JsonConvert.DeserializeObject<List<BookingViewModel>>(data);
+                    var deserializedList = JsonConvert.DeserializeObject<List<UserAccountViewModel>>(data);
                     if (deserializedList != null)
                     {
-                        bookingList = deserializedList;
+                        userAccountList = deserializedList;
                     }
                 }
             }
@@ -55,7 +53,7 @@ namespace TravelBooking.MVC.Controllers
                 return View("Error", new ErrorViewModel { RequestId = ex.Message });
             }
 
-            return View(bookingList);
+            return View(userAccountList);
         }
     }
 }

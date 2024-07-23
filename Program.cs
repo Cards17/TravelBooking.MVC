@@ -10,6 +10,12 @@ builder.Services.AddHttpClient<BookingController>(client =>
     client.BaseAddress = new Uri(webApiUrl);
 });
 
+builder.Services.AddHttpClient<UserController>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(builder.Configuration.GetValue<int>("WebApiTimeOut"));
+    client.BaseAddress = new Uri(webApiUrl);
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
